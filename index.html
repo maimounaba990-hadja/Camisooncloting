@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CamisonCloting — Style. Identité. Audace.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS GLOBAL */
+        :root {
+            --primary: #1a1a1a;
+            --accent: #d4af37;
+            --bg: #fdfdfd;
+            --text: #333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+        h1, h2, .logo { font-family: 'Playfair Display', serif; }
+
+        header {
+            background: #fff;
+            padding: 20px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; letter-spacing: 1px; }
+        .menu a { text-decoration: none; color: var(--text); margin-left: 20px; font-weight: 500; transition: 0.3s; }
+        .menu a:hover { color: var(--accent); }
+
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('18.jpeg') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .hero h1 { font-size: 3.5rem; letter-spacing: 5px; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; font-weight: 300; }
+
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 12px 35px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover { background: var(--primary); transform: scale(1.05); }
+
+        .section { padding: 80px 10%; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; position: relative; }
+        .section-title::after { content: ''; width: 50px; height: 3px; background: var(--accent); position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); }
+
+        .about { display: flex; align-items: center; gap: 50px; flex-wrap: wrap; }
+        .about div { flex: 1; min-width: 300px; }
+        .about img { flex: 1; min-width: 300px; max-height: 450px; object-fit: cover; border-radius: 10px; }
+
+        .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .card { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-10px); }
+        .card img { width: 100%; height: 400px; object-fit: cover; }
+        .card .info { padding: 20px; text-align: center; }
+        .card h3 { margin-bottom: 10px; font-size: 1.1rem; }
+        .card p { color: var(--accent); font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; }
+
+        #cart-section { background: #f4f4f4; border-radius: 20px; padding: 40px; margin-top: 20px; }
+        #cart { list-style: none; margin-bottom: 20px; }
+        #cart li { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #ddd; }
+        .total-box { font-size: 1.5rem; font-weight: bold; margin: 20px 0; text-align: right; }
+        .remove-btn { color: #ff4d4d; cursor: pointer; font-size: 0.8rem; margin-left: 10px; font-weight: bold; }
+
+        form { max-width: 600px; margin: 0 auto; display: grid; gap: 15px; }
+        form input, form textarea { width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 5px; font-family: inherit; }
+        
+        footer { background: var(--primary); color: white; text-align: center; padding: 40px; margin-top: 50px; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .section { padding: 50px 5%; }
+            .menu { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav">
+      <div class="logo">CamisonCloting</div>
+      <nav class="menu">
+        <a href="#home">Accueil</a>
+        <a href="#about">À propos</a>
+        <a href="#shop">Collection</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>STYLE. IDENTITÉ. AUDACE.</h1>
+      <p>Une collection pensée pour ceux qui osent s'affirmer.</p>
+      <a href="#shop" class="btn">Découvrir la collection</a>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="container about">
+      <div>
+        <h2>Notre Vision</h2>
+        <br>
+        <p><strong>CamisonCloting</strong> redéfinit le streetwear moderne avec une touche de minimalisme et de luxe. Chaque pièce est sélectionnée pour sa qualité supérieure et son design unique.</p>
+        <p>Nous croyons que le vêtement est le prolongement de votre personnalité.</p>
+      </div>
+      <img src="19.jpeg" alt="Vision Camison">
+    </div>
+  </section>
+
+  <section id="shop" class="section">
+    <div class="container">
+      <h2 class="section-title">Nouvelle Collection</h2>
+      <div class="products">
+        
+        <div class="card">
+          <img src="17.jpeg" alt="T-shirt Signature">
+          <div class="info">
+              <h3>T-shirt Signature</h3>
+              <p>50 000 FCFA</p>
+              <button class="btn" onclick="addToCart('T-shirt Signature', 50000)">Ajouter au panier</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="12.jpeg" alt="Hoodie Urban">
+          <div class="info">
+              <h3>Hoodie Urban</h3>
+              <p>45 000 FCFA</p>
+              <button class="btn" onclick="addToCart('Hoodie Urban', 45000)">Ajouter au panier</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="20.jpeg" alt="Culotte Signature">
+          <div class="info">
+              <h3>Culotte Signature</h3>
+              <p>60 000 FCFA</p>
+              <button class="btn" onclick="addToCart('Culotte Signature', 60000)">Ajouter au panier</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="11.jpeg" alt="T-shirt Techwear">
+          <div class="info">
+              <h3>T-shirt Techwear</h3>
+              <p>60 000 FCFA</p>
+              <button class="btn" onclick="addToCart('T-shirt Techwear', 60000)">Ajouter au panier</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="7.jpeg" alt="T-shirt Cargo">
+          <div class="info">
+              <h3>T-shirt Cargo</h3>
+              <p>55 000 FCFA</p>
+              <button class="btn" onclick="addToCart('T-shirt Cargo', 55000)">Ajouter au panier</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <img src="14.jpeg" alt="Ensemble">
+          <div class="info">
+              <h3>Ensemble</h3>
+              <p>70 000 FCFA</p>
+              <button class="btn" onclick="addToCart('Ensemble', 70000)">Ajouter au panier</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" id="cart-section">
+      <h2 class="section-title">Votre Panier</h2>
+      <ul id="cart"></ul>
+      <div class="total-box">
+          Total : <span id="total">0</span> FCFA
+      </div>
+      <div style="text-align: center;">
+          <a id="whatsapp" target="_blank" class="btn" style="background-color: #25d366; display: none;">Finaliser sur WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="container">
+      <h2 class="section-title">Contactez-nous</h2>
+      <form id="contactForm">
+        <input type="text" placeholder="Votre nom complet" required>
+        <input type="email" placeholder="Votre adresse email" required>
+        <textarea rows="5" placeholder="Comment pouvons-nous vous aider ?"></textarea>
+        <button type="submit" class="btn">Envoyer le message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 CamisonCloting — Tous droits réservés</p>
+    <p><small>Dakar, Sénégal</small></p>
+  </footer>
+
+<script>
+    let cart = [];
+    let total = 0;
+
+    function addToCart(name, price) {
+        cart.push({ name, price });
+        total += price;
+        updateUI();
+    }
+
+    function removeItem(index) {
+        total -= cart[index].price;
+        cart.splice(index, 1);
+        updateUI();
+    }
+
+    function updateUI() {
+        const cartEl = document.getElementById('cart');
+        const totalEl = document.getElementById('total');
+        const whatsappBtn = document.getElementById('whatsapp');
+        
+        cartEl.innerHTML = '';
+        
+        if (cart.length === 0) {
+            cartEl.innerHTML = '<li style="justify-content:center;">Votre panier est vide</li>';
+            whatsappBtn.style.display = 'none';
+        } else {
+            whatsappBtn.style.display = 'inline-block';
+        }
+
+        cart.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span>${item.name}</span>
+                <span>
+                    ${item.price.toLocaleString()} FCFA 
+                    <span class="remove-btn" onclick="removeItem(${index})">✕</span>
+                </span>
+            `;
+            cartEl.appendChild(li);
+        });
+
+        totalEl.textContent = total.toLocaleString();
+
+        const itemsList = cart.map(i => i.name).join(', ');
+        const message = `Bonjour CamisonCloting, je souhaite commander : ${itemsList}. Total : ${total.toLocaleString()} FCFA.`;
+        whatsappBtn.href = `https://wa.me/221777194237?text=${encodeURIComponent(message)}`;
+    }
+
+    updateUI();
+</script>
+
+</body>
+</html>
