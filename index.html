@@ -23,6 +23,8 @@
   --color-accent-light: #C4A882;
   --color-white: #FFFFFF;
   --color-black: #000000;
+  --color-wave: #1DC3F3;
+  --color-orange: #FF7900;
   --font-serif: 'Cormorant Garamond', serif;
   --font-sans: 'Montserrat', sans-serif;
   --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -1362,6 +1364,460 @@ body {
   transform: translateX(-50%) translateY(0);
 }
 
+/* Payment Modal */
+.payment-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  z-index: 4000;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+}
+.payment-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.payment-modal {
+  background: var(--color-white);
+  max-width: 480px;
+  width: 92%;
+  max-height: 92vh;
+  overflow-y: auto;
+  border-radius: 2px;
+  transform: scale(0.9) translateY(30px);
+  transition: transform 0.4s ease;
+  position: relative;
+}
+.payment-modal-overlay.active .payment-modal {
+  transform: scale(1) translateY(0);
+}
+.payment-modal-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  z-index: 10;
+  transition: var(--transition);
+  color: var(--color-text);
+}
+.payment-modal-close:hover {
+  background: var(--color-text);
+  color: var(--color-white);
+}
+.payment-modal-header {
+  padding: 2rem 2rem 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.payment-modal-header h3 {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+}
+.payment-modal-header p {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+}
+.payment-amount-display {
+  text-align: center;
+  padding: 1.5rem 2rem;
+  background: var(--color-bg-alt);
+}
+.payment-amount-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+  margin-bottom: 0.3rem;
+}
+.payment-amount-value {
+  font-family: var(--font-serif);
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.payment-methods-section {
+  padding: 2rem;
+}
+.payment-method-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-text-light);
+}
+.payment-method-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+.payment-method-option {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  border: 2px solid rgba(0,0,0,0.08);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: var(--transition);
+  background: var(--color-white);
+}
+.payment-method-option:hover {
+  border-color: var(--color-accent-light);
+}
+.payment-method-option.selected {
+  border-color: var(--color-accent);
+  background: var(--color-bg);
+}
+.payment-method-option input[type="radio"] {
+  display: none;
+}
+.payment-radio-visual {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+.payment-method-option.selected .payment-radio-visual {
+  border-color: var(--color-accent);
+}
+.payment-radio-visual::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  transform: scale(0);
+  transition: transform 0.2s ease;
+}
+.payment-method-option.selected .payment-radio-visual::after {
+  transform: scale(1);
+}
+.payment-method-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.payment-method-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.payment-method-logo.wave-logo {
+  background: var(--color-wave);
+}
+.payment-method-logo.orange-logo {
+  background: var(--color-orange);
+}
+.payment-method-info {
+  flex: 1;
+}
+.payment-method-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.1rem;
+}
+.payment-method-desc {
+  font-size: 0.7rem;
+  color: var(--color-text-light);
+}
+.payment-phone-section {
+  padding: 0 2rem 1.5rem;
+}
+.payment-phone-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+.phone-input-group {
+  display: flex;
+  gap: 0;
+  border: 1px solid rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: var(--transition);
+}
+.phone-input-group:focus-within {
+  border-color: var(--color-accent);
+}
+.phone-prefix {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  background: var(--color-bg-alt);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  border-right: 1px solid rgba(0,0,0,0.1);
+  min-width: 50px;
+}
+.phone-input {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  background: var(--color-white);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  outline: none;
+}
+.phone-input::placeholder {
+  color: rgba(0,0,0,0.2);
+}
+.payment-name-section {
+  padding: 0 2rem 1.5rem;
+}
+.payment-name-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+.payment-name-input {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: var(--color-white);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  outline: none;
+  transition: var(--transition);
+}
+.payment-name-input:focus {
+  border-color: var(--color-accent);
+}
+.payment-summary {
+  padding: 0 2rem 1.5rem;
+}
+.payment-summary-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  margin-bottom: 0.4rem;
+  color: var(--color-text-light);
+}
+.payment-summary-item.total {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(0,0,0,0.08);
+  margin-top: 0.6rem;
+}
+.payment-confirm-btn {
+  width: calc(100% - 4rem);
+  margin: 0 2rem 2rem;
+  padding: 1.2rem;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--transition);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+.payment-confirm-btn.wave-btn {
+  background: var(--color-wave);
+  color: var(--color-white);
+}
+.payment-confirm-btn.wave-btn:hover {
+  background: #0BA8D9;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(29,195,243,0.3);
+}
+.payment-confirm-btn.orange-btn {
+  background: var(--color-orange);
+  color: var(--color-white);
+}
+.payment-confirm-btn.orange-btn:hover {
+  background: #E66D00;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255,121,0,0.3);
+}
+.payment-confirm-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+.payment-confirm-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Payment Processing */
+.payment-processing {
+  display: none;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+.payment-processing.active {
+  display: block;
+}
+.spinner-ring {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(0,0,0,0.08);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1.5rem;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.payment-processing h4 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+.payment-processing p {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+}
+.payment-prompt-wave {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(29,195,243,0.08);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #0BA8D9;
+  line-height: 1.6;
+}
+.payment-prompt-orange {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(255,121,0,0.08);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #E66D00;
+  line-height: 1.6;
+}
+
+/* Payment Success */
+.payment-success {
+  display: none;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+.payment-success.active {
+  display: block;
+}
+.success-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4CAF50, #66BB6A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  animation: successPop 0.5s ease;
+}
+@keyframes successPop {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+.success-icon svg {
+  width: 36px;
+  height: 36px;
+  color: white;
+  stroke-width: 2.5;
+}
+.payment-success h4 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  color: #4CAF50;
+}
+.payment-success p {
+  font-size: 0.8rem;
+  color: var(--color-text-light);
+  line-height: 1.6;
+  margin-bottom: 0.3rem;
+}
+.payment-success .ref-number {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: var(--color-text);
+  background: var(--color-bg-alt);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  display: inline-block;
+  margin: 1rem 0 1.5rem;
+  letter-spacing: 0.1em;
+}
+.payment-success-btn {
+  width: 100%;
+  padding: 1rem;
+  background: var(--color-text);
+  color: var(--color-white);
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: var(--transition);
+  border-radius: 2px;
+}
+.payment-success-btn:hover {
+  background: var(--color-accent);
+}
+
+/* Payment form sections */
+.payment-form-section {
+  display: block;
+}
+.payment-form-section.hidden {
+  display: none;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .products-grid {
@@ -1392,6 +1848,7 @@ body {
   .modal-image { max-height: 40vh; }
   .newsletter-form { flex-direction: column; }
   .newsletter-input { border-right: 1px solid rgba(0,0,0,0.1); }
+  .payment-modal { width: 96%; }
 }
 @media (max-width: 480px) {
   .hero-title { font-size: 2.2rem; }
@@ -1399,6 +1856,114 @@ body {
   .products-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
   .product-name { font-size: 0.9rem; }
   .instagram-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.payment-methods {
+  margin-top: 20px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.payment-icons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.payment-icons img {
+  height: 28px;
+  background: white;
+  padding: 4px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.payment-icons img:hover {
+  transform: scale(1.1);
+}
+.footer-social {
+  display: flex;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.footer-social a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: 0.3s;
+}
+
+.footer-social a:hover {
+  background: #C4A882;
+  border-color: #C4A882;
+  transform: translateY(-3px);
+}
+
+.footer-social svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Footer payment buttons */
+.footer-payment-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.footer-payment-section h2 {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  color: var(--color-white);
+}
+.footer-payment-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.footer-pay-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.05);
+  color: var(--color-white);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.footer-pay-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+.footer-pay-btn.wave-pay-btn {
+  border-color: var(--color-wave);
+}
+.footer-pay-btn.wave-pay-btn:hover {
+  background: var(--color-wave);
+}
+.footer-pay-btn.orange-pay-btn {
+  border-color: var(--color-orange);
+}
+.footer-pay-btn.orange-pay-btn:hover {
+  background: var(--color-orange);
+}
+.footer-pay-btn img {
+  height: 28px;
+  width: 28px;
+  border-radius: 4px;
+  object-fit: cover;
 }
 </style>
 </head>
@@ -1698,6 +2263,42 @@ body {
       <span class="payment-icon">PAYPAL</span>
     </div>
   </div>
+ <div class="footer-social">
+  <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.5V12H17l-.5 3h-2.4v7A10 10 0 0 0 22 12z"/>
+    </svg>
+  </a>
+  <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5z"/>
+    </svg>
+  </a>
+  <a href="https://tiktok.com" target="_blank" aria-label="TikTok">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2v10.2a3.8 3.8 0 1 1-3-3.7V5.5a7 7 0 1 0 6 7V9.5a9 9 0 0 0 4 1V7a5 5 0 0 1-4-1V2z"/>
+    </svg>
+  </a>
+</div>
+  <span style="display:block;margin-top:1.5rem;font-size:0.8rem;color:rgba(255,255,255,0.6);">Paiement accepté :</span>
+  <div class="payment-icons">
+    <img src="logo_wave_circle_818.png" alt="Wave" />
+    <img src="orange-money.png" alt="Orange Money" />
+  </div>
+
+  <div class="footer-payment-section">
+    <h2>Choisissez votre méthode de paiement</h2>
+    <div class="footer-payment-buttons">
+      <button class="footer-pay-btn wave-pay-btn" onclick="openPaymentWithMethod('wave')">
+        <img src="logo_wave_circle_818.png" alt="Wave">
+        Payer avec Wave
+      </button>
+      <button class="footer-pay-btn orange-pay-btn" onclick="openPaymentWithMethod('orange')">
+        <img src="orange-money.png" alt="Orange Money">
+        Payer avec Orange Money
+      </button>
+    </div>
+  </div>
 </footer>
 
 <!-- Cart Overlay -->
@@ -1726,7 +2327,7 @@ body {
       <span>Total</span>
       <span id="cartTotal">0,00 FG</span>
     </div>
-    <button class="cart-checkout-btn" onclick="showToast('Redirection vers le paiement...')">Passer la Commande</button>
+    <button class="cart-checkout-btn" onclick="handleCheckout()">Passer la Commande</button>
   </div>
 </div>
 
@@ -1753,6 +2354,111 @@ body {
         </div>
       </div>
       <button class="modal-add-btn" id="modalAddBtn" onclick="addFromModal()">Ajouter au Panier</button>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Modal -->
+<div class="payment-modal-overlay" id="paymentModalOverlay">
+  <div class="payment-modal">
+    <button class="payment-modal-close" onclick="closePaymentModal()">✕</button>
+
+    <!-- Payment Form -->
+    <div class="payment-form-section" id="paymentFormSection">
+      <div class="payment-modal-header">
+        <h3>Paiement Sécurisé</h3>
+        <p>Finalisez votre commande en toute sécurité</p>
+      </div>
+      <div class="payment-amount-display">
+        <p class="payment-amount-label">Montant à payer</p>
+        <p class="payment-amount-value" id="paymentAmountValue">0,00 FG</p>
+      </div>
+
+      <div class="payment-methods-section">
+        <p class="payment-method-label">Méthode de paiement</p>
+        <div class="payment-method-options">
+          <label class="payment-method-option" id="paymentOptionWave" onclick="selectPaymentMethod('wave')">
+            <input type="radio" name="paymentMethod" value="wave">
+            <span class="payment-radio-visual"></span>
+            <span class="payment-method-logo wave-logo">
+              <img src="logo_wave_circle_818.png" alt="Wave">
+            </span>
+            <span class="payment-method-info">
+              <span class="payment-method-name">Wave</span>
+              <span class="payment-method-desc">Paiement instantané via Wave</span>
+            </span>
+          </label>
+          <label class="payment-method-option" id="paymentOptionOrange" onclick="selectPaymentMethod('orange')">
+            <input type="radio" name="paymentMethod" value="orange">
+            <span class="payment-radio-visual"></span>
+            <span class="payment-method-logo orange-logo">
+              <img src="orange-money.png" alt="Orange Money">
+            </span>
+            <span class="payment-method-info">
+              <span class="payment-method-name">Orange Money</span>
+              <span class="payment-method-desc">Paiement via Orange Money</span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div class="payment-name-section">
+        <label class="payment-name-label">Nom complet</label>
+        <input type="text" class="payment-name-input" id="paymentNameInput" placeholder="Entrez votre nom complet">
+      </div>
+
+      <div class="payment-phone-section">
+        <label class="payment-phone-label">Numéro de téléphone</label>
+        <div class="phone-input-group">
+          <span class="phone-prefix">+224</span>
+          <input type="tel" class="phone-input" id="paymentPhoneInput" placeholder="6XX XX XX XX" maxlength="9">
+        </div>
+      </div>
+
+      <div class="payment-summary" id="paymentSummary">
+        <!-- Filled by JS -->
+      </div>
+
+      <button class="payment-confirm-btn wave-btn" id="paymentConfirmBtn" onclick="processPayment()" disabled>
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2zm10-10V7a4 4 0 0 0-8 0v4h8z"/></svg>
+        <span id="paymentConfirmBtnText">Choisissez une méthode</span>
+      </button>
+    </div>
+
+    <!-- Processing -->
+    <div class="payment-processing" id="paymentProcessing">
+      <div class="spinner-ring"></div>
+      <h4>Traitement en cours...</h4>
+      <p id="processingText">Veuillez patienter pendant le traitement de votre paiement.</p>
+      <div class="payment-prompt-wave" id="paymentPromptWave" style="display:none;">
+        📱 Ouvrez l'application <strong>Wave</strong> sur votre téléphone et confirmez la transaction de <strong id="wavePromptAmount">0 FG</strong>.
+      </div>
+      <div class="payment-prompt-orange" id="paymentPromptOrange" style="display:none;">
+        📱 Composez <strong>#144#</strong> ou ouvrez l'application <strong>Orange Money</strong> et confirmez la transaction de <strong id="orangePromptAmount">0 FG</strong>.
+      </div>
+    </div>
+
+    <!-- Success -->
+    <div class="payment-success" id="paymentSuccess">
+      <div class="success-icon">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <h4>Paiement réussi !</h4>
+      <p>Votre commande a été confirmée avec succès.</p>
+      <p>Un reçu a été envoyé à votre numéro.</p>
+      <div class="ref-number" id="refNumber">REF-CC-000000</div>
+      <p style="font-size:0.75rem;color:var(--color-text-light);margin-bottom:1.5rem;">Merci pour votre achat chez CAMISON CLOTING 🎉</p>
+      <button class="payment-success-btn" onclick="closePaymentModal(); resetPaymentForm();">Continuer mes achats</button>
+    </div>
+
+    <!-- Error -->
+    <div class="payment-processing" id="paymentError">
+      <div style="width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#e74c3c,#c0392b);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
+        <svg width="30" height="30" fill="none" stroke="white" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </div>
+      <h4 style="color:#e74c3c;font-family:var(--font-serif);font-size:1.4rem;font-weight:400;margin-bottom:0.5rem;">Échec du paiement</h4>
+      <p style="font-size:0.8rem;color:var(--color-text-light);margin-bottom:1.5rem;" id="errorMessage">La transaction n'a pas pu être complétée. Veuillez réessayer.</p>
+      <button class="payment-success-btn" style="background:#e74c3c;" onclick="resetPaymentForm()">Réessayer</button>
     </div>
   </div>
 </div>
@@ -1861,6 +2567,7 @@ const products = [
 // Cart State
 let cart = [];
 let currentModalProduct = null;
+let selectedPaymentMethod = null;
 
 // Render Products
 function renderProducts() {
@@ -1990,7 +2697,6 @@ function updateCart() {
   if (cart.length === 0) {
     emptyEl.style.display = 'block';
     footerEl.style.display = 'none';
-    // Remove rendered items but keep empty state
     const rendered = itemsEl.querySelectorAll('.cart-item');
     rendered.forEach(el => el.remove());
     return;
@@ -1999,7 +2705,6 @@ function updateCart() {
   emptyEl.style.display = 'none';
   footerEl.style.display = 'block';
 
-  // Render items
   const rendered = itemsEl.querySelectorAll('.cart-item');
   rendered.forEach(el => el.remove());
 
@@ -2097,7 +2802,6 @@ function openModal(index) {
   document.getElementById('modalPrice').textContent = products[index].price + ' FG';
   document.getElementById('modalDesc').textContent = products[index].desc;
 
-  // Reset sizes
   document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelectorAll('.size-btn')[1].classList.add('active');
 
@@ -2111,7 +2815,6 @@ function closeModal() {
   currentModalProduct = null;
 }
 
-// Close modal on overlay click
 document.getElementById('productModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
@@ -2142,12 +2845,238 @@ function openSearch() {
   showToast('Recherche — fonctionnalité à venir');
 }
 
+// =====================
+// PAYMENT SYSTEM
+// =====================
+
+function getCartTotal() {
+  return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+}
+
+function handleCheckout() {
+  if (cart.length === 0) {
+    showToast('Votre panier est vide');
+    return;
+  }
+  closeCart();
+  setTimeout(() => {
+    openPaymentModal();
+  }, 300);
+}
+
+function openPaymentModal() {
+  if (cart.length === 0) {
+    showToast('Votre panier est vide');
+    return;
+  }
+  const total = getCartTotal();
+  document.getElementById('paymentAmountValue').textContent = total.toFixed(2) + ' FG';
+
+  // Build summary
+  const summaryEl = document.getElementById('paymentSummary');
+  let summaryHTML = '';
+  cart.forEach(item => {
+    summaryHTML += `<div class="payment-summary-item"><span>${item.name} × ${item.qty}</span><span>${(item.price * item.qty).toFixed(2)} FG</span></div>`;
+  });
+  summaryHTML += `<div class="payment-summary-item"><span>Livraison</span><span>Gratuite</span></div>`;
+  summaryHTML += `<div class="payment-summary-item total"><span>Total</span><span>${total.toFixed(2)} FG</span></div>`;
+  summaryEl.innerHTML = summaryHTML;
+
+  resetPaymentForm();
+  document.getElementById('paymentModalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function openPaymentWithMethod(method) {
+  if (cart.length === 0) {
+    showToast('Votre panier est vide. Ajoutez des articles d\'abord.');
+    return;
+  }
+  const total = getCartTotal();
+  document.getElementById('paymentAmountValue').textContent = total.toFixed(2) + ' FG';
+
+  // Build summary
+  const summaryEl = document.getElementById('paymentSummary');
+  let summaryHTML = '';
+  cart.forEach(item => {
+    summaryHTML += `<div class="payment-summary-item"><span>${item.name} × ${item.qty}</span><span>${(item.price * item.qty).toFixed(2)} FG</span></div>`;
+  });
+  summaryHTML += `<div class="payment-summary-item"><span>Livraison</span><span>Gratuite</span></div>`;
+  summaryHTML += `<div class="payment-summary-item total"><span>Total</span><span>${total.toFixed(2)} FG</span></div>`;
+  summaryEl.innerHTML = summaryHTML;
+
+  resetPaymentForm();
+
+  // Pre-select the method
+  selectedPaymentMethod = method;
+  document.getElementById('paymentOptionWave').classList.remove('selected');
+  document.getElementById('paymentOptionOrange').classList.remove('selected');
+  document.querySelectorAll('input[name="paymentMethod"]').forEach(r => r.checked = false);
+
+  if (method === 'wave') {
+    document.getElementById('paymentOptionWave').classList.add('selected');
+    document.querySelector('#paymentOptionWave input').checked = true;
+    updatePaymentButton(method);
+  } else {
+    document.getElementById('paymentOptionOrange').classList.add('selected');
+    document.querySelector('#paymentOptionOrange input').checked = true;
+    updatePaymentButton(method);
+  }
+
+  document.getElementById('paymentModalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closePaymentModal() {
+  document.getElementById('paymentModalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('paymentModalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closePaymentModal();
+});
+
+function selectPaymentMethod(method) {
+  selectedPaymentMethod = method;
+  document.getElementById('paymentOptionWave').classList.remove('selected');
+  document.getElementById('paymentOptionOrange').classList.remove('selected');
+  if (method === 'wave') {
+    document.getElementById('paymentOptionWave').classList.add('selected');
+  } else {
+    document.getElementById('paymentOptionOrange').classList.add('selected');
+  }
+  updatePaymentButton(method);
+}
+
+function updatePaymentButton(method) {
+  const btn = document.getElementById('paymentConfirmBtn');
+  const btnText = document.getElementById('paymentConfirmBtnText');
+  btn.disabled = false;
+  btn.className = 'payment-confirm-btn ' + (method === 'wave' ? 'wave-btn' : 'orange-btn');
+  btnText.textContent = method === 'wave' ? 'Payer avec Wave' : 'Payer avec Orange Money';
+}
+
+function validatePhone(phone) {
+  const cleaned = phone.replace(/\s/g, '');
+  return /^6\d{8}$/.test(cleaned);
+}
+
+function processPayment() {
+  const name = document.getElementById('paymentNameInput').value.trim();
+  const phone = document.getElementById('paymentPhoneInput').value.trim();
+  const total = getCartTotal();
+
+  if (!selectedPaymentMethod) {
+    showToast('Veuillez choisir une méthode de paiement');
+    return;
+  }
+  if (!name) {
+    showToast('Veuillez entrer votre nom complet');
+    document.getElementById('paymentNameInput').focus();
+    return;
+  }
+  if (!validatePhone(phone)) {
+    showToast('Veuillez entrer un numéro valide (+224 6XX XX XX XX)');
+    document.getElementById('paymentPhoneInput').focus();
+    return;
+  }
+
+  // Show processing
+  document.getElementById('paymentFormSection').classList.add('hidden');
+  document.getElementById('paymentProcessing').classList.add('active');
+  document.getElementById('paymentSuccess').classList.remove('active');
+  document.getElementById('paymentError').classList.remove('active');
+
+  // Show prompts
+  const totalStr = total.toFixed(2) + ' FG';
+  if (selectedPaymentMethod === 'wave') {
+    document.getElementById('paymentPromptWave').style.display = 'block';
+    document.getElementById('paymentPromptOrange').style.display = 'none';
+    document.getElementById('wavePromptAmount').textContent = totalStr;
+    document.getElementById('processingText').textContent = 'Connexion à Wave en cours...';
+  } else {
+    document.getElementById('paymentPromptWave').style.display = 'none';
+    document.getElementById('paymentPromptOrange').style.display = 'block';
+    document.getElementById('orangePromptAmount').textContent = totalStr;
+    document.getElementById('processingText').textContent = 'Connexion à Orange Money en cours...';
+  }
+
+  // Simulate payment processing
+  setTimeout(() => {
+    document.getElementById('processingText').textContent = 'Vérification de la transaction...';
+  }, 1500);
+
+  setTimeout(() => {
+    // Simulate success (90% chance)
+    const isSuccess = Math.random() > 0.1;
+
+    if (isSuccess) {
+      document.getElementById('paymentProcessing').classList.remove('active');
+      document.getElementById('paymentSuccess').classList.add('active');
+
+      // Generate reference
+      const refNum = 'REF-CC-' + Date.now().toString().slice(-6);
+      document.getElementById('refNumber').textContent = refNum;
+
+      // Clear cart
+      cart = [];
+      updateCart();
+    } else {
+      document.getElementById('paymentProcessing').classList.remove('active');
+      document.getElementById('paymentError').classList.add('active');
+      document.getElementById('errorMessage').textContent = 'La transaction n\'a pas pu être complétée. Vérifiez votre solde et réessayez.';
+    }
+  }, 3500);
+}
+
+function resetPaymentForm() {
+  document.getElementById('paymentFormSection').classList.remove('hidden');
+  document.getElementById('paymentProcessing').classList.remove('active');
+  document.getElementById('paymentSuccess').classList.remove('active');
+  document.getElementById('paymentError').classList.remove('active');
+  document.getElementById('paymentPromptWave').style.display = 'none';
+  document.getElementById('paymentPromptOrange').style.display = 'none';
+
+  selectedPaymentMethod = null;
+  document.getElementById('paymentOptionWave').classList.remove('selected');
+  document.getElementById('paymentOptionOrange').classList.remove('selected');
+  document.querySelectorAll('input[name="paymentMethod"]').forEach(r => r.checked = false);
+
+  const btn = document.getElementById('paymentConfirmBtn');
+  btn.disabled = true;
+  btn.className = 'payment-confirm-btn wave-btn';
+  document.getElementById('paymentConfirmBtnText').textContent = 'Choisissez une méthode';
+
+  document.getElementById('paymentNameInput').value = '';
+  document.getElementById('paymentPhoneInput').value = '';
+}
+
 // Keyboard shortcuts
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeCart();
     closeModal();
     closeMobileMenu();
+    closePaymentModal();
+  }
+});
+
+// Phone input formatting
+document.addEventListener('DOMContentLoaded', () => {
+  const phoneInput = document.getElementById('paymentPhoneInput');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function() {
+      let val = this.value.replace(/\D/g, '');
+      if (val.length > 9) val = val.slice(0, 9);
+      if (val.length > 3 && val.length <= 5) {
+        val = val.slice(0, 3) + ' ' + val.slice(3);
+      } else if (val.length > 5 && val.length <= 7) {
+        val = val.slice(0, 3) + ' ' + val.slice(3, 5) + ' ' + val.slice(5);
+      } else if (val.length > 7) {
+        val = val.slice(0, 3) + ' ' + val.slice(3, 5) + ' ' + val.slice(5, 7) + ' ' + val.slice(7);
+      }
+      this.value = val;
+    });
   }
 });
 
