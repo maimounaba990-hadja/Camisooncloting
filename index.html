@@ -2411,7 +2411,7 @@ body {
         <label class="payment-phone-label">Numéro de téléphone</label>
         <div class="phone-input-group">
           <span class="phone-prefix">+224</span>
-          <input type="tel" class="phone-input" id="paymentPhoneInput" placeholder="6XX XX XX XX" maxlength="9">
+          <input type="tel" class="phone-input" id="paymentPhoneInput" placeholder="600 00 00 00 " maxlength="12">
         </div>
       </div>
 
@@ -2976,7 +2976,7 @@ function processPayment() {
     return;
   }
   if (!validatePhone(phone)) {
-    showToast('Veuillez entrer un numéro valide (+224 6XX XX XX XX)');
+    showToast('Veuillez entrer un numéro valide (+224 600 00 00 00)');
     document.getElementById('paymentPhoneInput').focus();
     return;
   }
@@ -3067,7 +3067,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (phoneInput) {
     phoneInput.addEventListener('input', function() {
       let val = this.value.replace(/\D/g, '');
-      if (val.length > 9) val = val.slice(0, 9);
+      if (val.length < 9) val = val.slice(0, 9);
       if (val.length > 3 && val.length <= 5) {
         val = val.slice(0, 3) + ' ' + val.slice(3);
       } else if (val.length > 5 && val.length <= 7) {
